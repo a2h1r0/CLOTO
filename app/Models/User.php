@@ -39,4 +39,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Seat モデルのリレーション
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function seat()
+    {
+        return $this->belongsTo('App\Models\Seat', 'user_id', 'user_id');
+    }
 }
