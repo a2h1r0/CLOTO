@@ -29,4 +29,4 @@ Route::get('/auth/user', fn () => Auth::user())->name('authUser');
 Route::get('/user/{username}', 'API\UserController@show')->name('userShow');
 Route::post('/user/update', 'API\UserController@update')->name('profileUpdate');
 
-Route::get('/room/{room_id}', 'API\RoomController@show')->name('roomShow');
+Route::get('/room/{id}', 'API\RoomController@show')->name('roomShow');

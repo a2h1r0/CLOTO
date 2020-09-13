@@ -47,6 +47,6 @@ class User extends Authenticatable
      */
     public function seat()
     {
-        return $this->belongsTo('App\Models\Seat', 'user_id', 'user_id');
+        return $this->belongsTo('App\Models\Seat');
     }
 }

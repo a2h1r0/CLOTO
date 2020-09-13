@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Section extends Model
 {
-    protected $primaryKey = 'section_id';
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +24,7 @@ class Section extends Model
      */
     public function room()
     {
-        return $this->belongsTo('App\Models\Room', 'room_id', 'room_id');
+        return $this->belongsTo('App\Models\Room');
     }
 
     /**
@@ -34,6 +34,6 @@ class Section extends Model
      */
     public function seats()
     {
-        return $this->hasMany('App\Models\Seat', 'section_id', 'section_id');
+        return $this->hasMany('App\Models\Seat');
     }
 }

@@ -14,7 +14,7 @@ class CreateSectionsTable extends Migration
     public function up()
     {
         Schema::create('sections', function (Blueprint $table) {
-            $table->increments('section_id');   // 区画ID
+            $table->increments('id');           // 区画ID
             $table->unsignedInteger('room_id'); // 所属する部屋ID
             $table->string('role');             // 役割
         });

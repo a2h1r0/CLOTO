@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Seat extends Model
 {
-    protected $primaryKey = 'seat_id';
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -14,7 +14,7 @@ class Seat extends Model
      * @var array
      */
     protected $fillable = [
-        'room_id', 'position', 'user_id', 'status'
+        'section_id', 'position', 'user_id', 'status'
     ];
 
     /**
@@ -24,7 +24,7 @@ class Seat extends Model
      */
     public function section()
     {
-        return $this->belongsTo('App\Models\Section', 'section_id', 'section_id');
+        return $this->belongsTo('App\Models\Section');
     }
 
     /**
@@ -34,6 +34,6 @@ class Seat extends Model
      */
     public function user()
     {
-        return $this->hasOne('App\Models\User', 'user_id', 'user_id');
+        return $this->hasOne('App\Models\User');
     }
 }

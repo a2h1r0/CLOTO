@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
-    protected $primaryKey = 'room_id';
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['role'];
+    protected $fillable = ['name'];
 
     /**
      * Section モデルのリレーション
@@ -22,6 +22,6 @@ class Room extends Model
      */
     public function sections()
     {
-        return $this->hasMany('App\Models\Section', 'room_id', 'room_id');
+        return $this->hasMany('App\Models\Section');
     }
 }
