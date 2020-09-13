@@ -15,7 +15,7 @@ class CreateSeatsTable extends Migration
     {
         Schema::create('seats', function (Blueprint $table) {
             $table->increments('seat_id');                  // 座席ID
-            $table->unsignedInteger('room_id');             // 部屋ID
+            $table->unsignedInteger('section_id');          // 所属する区画ID
             $table->string('position')->nullable();         // 座席位置
             $table->unsignedInteger('user_id')->nullable(); // 着席しているユーザーID
             $table->string('status')->nullable();           // 座席状態

@@ -18,13 +18,13 @@ class Seat extends Model
     ];
 
     /**
-     * Room モデルのリレーション
+     * Section モデルのリレーション
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function room()
+    public function section()
     {
-        return $this->belongsTo('App\Models\Room', 'room_id', 'room_id');
+        return $this->belongsTo('App\Models\Section', 'section_id', 'section_id');
     }
 
     /**

@@ -16,12 +16,12 @@ class Room extends Model
     protected $fillable = ['role'];
 
     /**
-     * Seat モデルのリレーション
+     * Section モデルのリレーション
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function seats()
+    public function sections()
     {
-        return $this->hasMany('App\Models\Seat', 'room_id', 'room_id');
+        return $this->hasMany('App\Models\Section', 'room_id', 'room_id');
     }
 }
