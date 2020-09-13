@@ -13,7 +13,7 @@ if (!function_exists('get_user')) {
     function get_user(String $user_param)
     {
         if (preg_match('/^[0-9]+$/', $user_param)) {
-            $user = User::where('user_id', $user_param)->first();
+            $user = User::where('id', $user_param)->first();
         } else {
             $user = User::where('username', $user_param)->first();
         }

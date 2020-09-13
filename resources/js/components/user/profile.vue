@@ -19,7 +19,7 @@
                 name: 'profileEdit',
                 params: { username: $store.getters['auth/user'].username },
               }"
-              v-if="user.user_id == authId"
+              v-if="user.id == authId"
             >編集する</router-link>
           </div>
           <!-- ボタン類 -->
