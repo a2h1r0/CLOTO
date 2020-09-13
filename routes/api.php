@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,5 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/auth/user', fn () => Auth::user())->name('authUser');
 Route::get('/user/{username}', 'API\UserController@show')->name('userShow');
 Route::post('/user/update', 'API\UserController@update')->name('profileUpdate');
+
+Route::get('/room/{room_id}', 'API\RoomController@show')->name('roomShow');
