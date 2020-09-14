@@ -46,6 +46,28 @@ class SeatController extends Controller
     }
 
     /**
+     * 休憩
+     *
+     * @param  \App\Models\Seat  $seat
+     * @return \Illuminate\Http\Response
+     */
+    public function rest(Seat $seat)
+    {
+        if ($seat->user_id != Auth::id()) {
+            return response()->json(
+                'エラーが発生しました．',
+                500,
+                [],
+                JSON_UNESCAPED_UNICODE
+            );
+        }
+
+        $result = $seat->update(['status' => 'rest']);
+
+        return response()->json($result);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
