@@ -30,3 +30,4 @@ Route::get('/user/{username}', 'API\UserController@show')->name('userShow');
 Route::post('/user/update', 'API\UserController@update')->name('profileUpdate');
 
 Route::get('/room/{id}', 'API\RoomController@show')->name('roomShow');
+Route::post('/seat/sit/{id}', 'API\SeatController@sit')->name('seatSit');
