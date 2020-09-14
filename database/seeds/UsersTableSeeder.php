@@ -13,48 +13,17 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::insert([
-            [
-                'username' => 'test',
-                'email' => 'test@cloto.jp',
+        $usernames = ['test', 'test2', 'test3', 'test4', 'test5'];
+        foreach ($usernames as $username) {
+            User::insert([
+                'username' => $username,
+                'email' => $username . '@cloto.jp',
                 'password' => Hash::make('password'),
-                'handlename' => 'test',
+                'handlename' => $username,
                 'icon' => 'default.jpg',
                 'sns' => json_encode(['twitter' => '', 'github' => '', 'qiita' => '']),
                 'setting_notification' => 'All'
-            ], [
-                'username' => 'test2',
-                'email' => 'test2@cloto.jp',
-                'password' => Hash::make('password'),
-                'handlename' => 'test2',
-                'icon' => 'default.jpg',
-                'sns' => json_encode(['twitter' => '', 'github' => '', 'qiita' => '']),
-                'setting_notification' => 'All'
-            ], [
-                'username' => 'test3',
-                'email' => 'test3@cloto.jp',
-                'password' => Hash::make('password'),
-                'handlename' => 'test3',
-                'icon' => 'default.jpg',
-                'sns' => json_encode(['twitter' => '', 'github' => '', 'qiita' => '']),
-                'setting_notification' => 'All'
-            ], [
-                'username' => 'test4',
-                'email' => 'test4@cloto.jp',
-                'password' => Hash::make('password'),
-                'handlename' => 'test4',
-                'icon' => 'default.jpg',
-                'sns' => json_encode(['twitter' => '', 'github' => '', 'qiita' => '']),
-                'setting_notification' => 'All'
-            ], [
-                'username' => 'test5',
-                'email' => 'test5@cloto.jp',
-                'password' => Hash::make('password'),
-                'handlename' => 'test5',
-                'icon' => 'default.jpg',
-                'sns' => json_encode(['twitter' => '', 'github' => '', 'qiita' => '']),
-                'setting_notification' => 'All'
-            ],
-        ]);
+            ]);
+        }
     }
 }

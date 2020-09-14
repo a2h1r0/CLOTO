@@ -12,12 +12,9 @@ class RoomsTableSeeder extends Seeder
      */
     public function run()
     {
-        Room::insert([
-            ['name' => '101'],
-            ['name' => '102'],
-            ['name' => '103'],
-            ['name' => '104'],
-            ['name' => '105'],
-        ]);
+        $names = ['101', '102', '103', '104', '105'];
+        foreach ($names as $name) {
+            Room::insert(['name' => $name]);
+        }
     }
 }
