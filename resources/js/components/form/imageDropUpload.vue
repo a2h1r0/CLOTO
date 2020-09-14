@@ -68,7 +68,7 @@
 
 
 <script>
-import { VueCropper } from "vue-cropper";
+import { VueCropper } from 'vue-cropper';
 
 export default {
   components: {
@@ -83,12 +83,12 @@ export default {
     return {
       dragLeave: true,
       dragOver: false,
-      preview: "",
+      preview: '',
       cropperModal: false,
       option: {
-        img: "",
+        img: '',
         size: 1,
-        outputType: "jpeg",
+        outputType: 'jpeg',
         autoCrop: true,
         autoCropWidth: 1024,
         autoCropHeight: 1024,
@@ -107,9 +107,7 @@ export default {
 
       this.cropperModal = true;
 
-      const files = event.target.files
-        ? event.target.files
-        : event.dataTransfer.files;
+      const files = event.target.files ? event.target.files : event.dataTransfer.files;
       const file = files[0];
 
       // TODO: バリデーション作成の必要あり
@@ -121,7 +119,7 @@ export default {
       var reader = new FileReader();
       reader.onload = (event) => {
         let data;
-        if (typeof event.target.result === "object") {
+        if (typeof event.target.result === 'object') {
           data = window.URL.createObjectURL(new Blob([event.target.result]));
         } else {
           data = event.target.result;
@@ -142,14 +140,14 @@ export default {
 
       this.$refs.cropper.getCropBlob((data) => {
         // 親コンポーネントのformDataに画像を追加
-        this.$parent.formData.append("upload-image", data, "image.png");
+        this.$parent.formData.append('upload-image', data, 'image.png');
       });
     },
     changeStyle: function (status) {
-      if (status == "over") {
+      if (status == 'over') {
         this.dragLeave = false;
         this.dragOver = true;
-      } else if (status == "leave") {
+      } else if (status == 'leave') {
         this.dragLeave = true;
         this.dragOver = false;
       }
@@ -160,7 +158,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "~/_variables";
+@import '~/_variables';
 
 /* 画像アップロードエリア */
 .area {
@@ -184,7 +182,7 @@ export default {
 
 /* カラー変更 */
 .dragLeave {
-  background-color: $bg-color;
+  background-color: $light-gray;
 }
 
 .dragOver {
@@ -211,11 +209,11 @@ export default {
       text-align: right;
 
       a {
-        color: $btn-cancel-color;
+        color: $vermilion;
         cursor: pointer;
 
         &:hover {
-          color: $btn-cancel_hover-color;
+          color: $red;
         }
       }
     }

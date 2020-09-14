@@ -11,18 +11,18 @@
 @import '~bootstrap/scss/bootstrap';
 
 // Parts
-@import "parts";
+@import 'parts';
 //*** END Import ***//
-
 
 /**
  * Page
  */
 html {
-    word-break: break-all;
+  font-family: $font-family;
+  word-break: break-all;
 }
 
 body {
-    font-size: 12px;
-    background-color: $bg-color;
+  font-size: 12px;
+  background-color: $light-gray;
 }

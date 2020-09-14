@@ -1,62 +1,66 @@
 <template>
-  <!-- <v-card class="mx-auto" max-width="344">
-    <v-card-text>
-      <v-form>
+  <v-dialog v-model="dialog" max-width="440">
+    <v-card>
+      <v-card-text>
         <v-container>
           <v-row>
             <v-col>
-              <v-text-field label="Regular"></v-text-field>
+              <!-- エラーメッセージ -->
+              <v-alert type="error" v-if="loginErrors">
+                <span v-for="msg in loginErrors.loginField" :key="msg">{{ msg }}</span>
+              </v-alert>
+
+              <!-- ロゴ -->
+              <img
+                :src="$storage('system') + 'logo.png'"
+                class="login-logo"
+                alt="logo"
+                width="35"
+                height="35"
+                v-if="!loginErrors"
+              />
+
+              <!-- タイトル -->
+              <h2>ログイン</h2>
+
+              <!-- フォーム -->
+              <v-form>
+                <v-text-field
+                  v-model="loginField"
+                  label="ユーザー名 または メールアドレス"
+                ></v-text-field>
+
+                <v-text-field
+                  :append-icon="showPassword ? 'far fa-eye' : 'far fa-eye-slash'"
+                  :type="showPassword ? 'text' : 'password'"
+                  v-model="password"
+                  label="パスワード"
+                  @click:append="showPassword = !showPassword"
+                ></v-text-field>
+
+                <v-row justify="center">
+                  <button
+                    v-on:click="login()"
+                    type="button"
+                    class="btn btn-cloto-primary"
+                    v-bind:disabled="isButtonDisabled"
+                  >
+                    ログイン
+                  </button>
+                </v-row>
+              </v-form>
             </v-col>
           </v-row>
         </v-container>
-      </v-form>
-    </v-card-text>
-    <v-card-actions>
-      <v-btn text color="deep-purple accent-4">Learn More</v-btn>
-    </v-card-actions>
-  </v-card>-->
-  <div class="welcome-form card justify-content-center">
-    <div v-if="loginErrors" class="errors">
-      <ul v-if="loginErrors.loginField">
-        <li v-for="msg in loginErrors.loginField" :key="msg">{{ msg }}</li>
-      </ul>
-    </div>
 
-    <div class="form-group row">
-      <input type="text" class="form-control" v-model="loginField" placeholder="ユーザー名 または メールアドレス" />
-      <div class="welcome-form__feedback--margin">&nbsp;</div>
-    </div>
-
-    <div class="form-group row">
-      <input type="password" class="form-control" v-model="password" placeholder="パスワード" />
-      <div class="welcome-form__feedback--margin">&nbsp;</div>
-    </div>
-
-    <div class="form-group row">
-      <div class="custom-control custom-radio">
-        <input class="custom-control-input" type="checkbox" v-model="remember" />
-        <label class="custom-control-label" for="remember">ログイン情報を記憶する</label>
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <div>
-        <div>
-          <button
-            type="button"
-            class="btn btn-cloto-primary"
-            v-bind:disabled="isButtonDisabled"
-            @click="login"
-          >ログイン</button>
-        </div>
-        <div class="mt-3">
-          <router-link :to="{ name: 'register' }">新規登録はこちら</router-link>
-        </div>
-      </div>
-    </div>
-  </div>
+        <!-- 新規登録画面へのリンク -->
+        <v-row justify="center">
+          アカウントをお持ちでない方は<router-link :to="{ name: 'register' }">こちら</router-link>
+        </v-row>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
-
 
 <script>
 export default {
@@ -69,24 +73,17 @@ export default {
   },
   data() {
     return {
-      error: '',
+      dialog: true,
       loginField: '',
       password: '',
-      remember: false,
+      showPassword: false,
       isButtonDisabled: true,
     };
   },
-  watch: {
-    loginField: function () {
-      this.error = '';
-      this.changeButton();
-    },
-    password: function () {
-      this.error = '';
-      this.changeButton();
-    },
-  },
   computed: {
+    _allTexts() {
+      return [this.loginField, this.password];
+    },
     apiStatus() {
       return this.$store.state.auth.apiStatus;
     },
@@ -94,20 +91,27 @@ export default {
       return this.$store.state.auth.loginErrorMessages;
     },
   },
-  methods: {
-    changeButton: function () {
-      if (this.loginField && this.password) {
-        this.isButtonDisabled = false;
-      } else {
-        this.isButtonDisabled = true;
+  watch: {
+    dialog: function () {
+      // モーダルが閉じたらリダイレクト
+      if (this.dialog === false) {
+        this.$router.push({ name: 'index' });
       }
     },
+    _allTexts(inputField) {
+      if (inputField.indexOf('') === -1) {
+        this.isButtonDisabled = false; // ログインボタンの有効化
+      } else {
+        this.isButtonDisabled = true; // ログインボタンの無効化
+      }
+    },
+  },
+  methods: {
     login: async function () {
       // データの作成
       var params = {
         loginField: this.loginField,
         password: this.password,
-        remember: this.remember,
       };
 
       // ログイン処理
@@ -126,46 +130,17 @@ export default {
 };
 </script>
 
-
 <style lang="scss" scoped>
 @import '~/_variables';
 
-.welcome-form {
-  width: 400px;
-  height: 360px;
-  margin: auto;
-  background-color: $bg-color;
-  border-radius: 30px;
-  border: none;
+.login-logo {
+  display: block;
+  margin: 0 auto;
+}
 
-  .alert {
-    position: absolute;
-    top: 0;
-    width: 400px;
-    border-radius: 30px 30px 0 0;
-  }
-
-  .form-group {
-    margin: 10px 0;
-
-    div {
-      margin: 0 auto;
-    }
-
-    input[type='text'],
-    input[type='password'] {
-      width: 250px;
-      margin: 0 auto;
-      border-radius: 30px;
-    }
-  }
-
-  &__feedback {
-    &--margin {
-      width: 100%;
-      margin-top: 0.25rem;
-      font-size: 1em;
-    }
-  }
+h2 {
+  margin: 0.8em 0 0.5em 0;
+  text-align: center;
+  font-weight: bold;
 }
 </style>

@@ -1,13 +1,13 @@
 //*** ボタン ***//
 //* 有効時 *//
 .btn-cloto-primary {
-    font-weight: bold;
-    background-color: $main-color;
-    color: $font-color;
+  font-weight: bold;
+  background-color: $primary;
+  color: $black;
 }
 
 .btn-cloto-primary:hover {
-    background-color: rgb(255, 201, 20);
+  background-color: rgb(255, 201, 20);
 }
 
 .btn-cloto-primary:focus,
@@ -15,13 +15,13 @@
 .btn-cloto-primary:not(:disabled):not(.disabled):active:focus,
 .btn-cloto-primary:not(:disabled):not(.disabled).active:focus,
 .show > .btn-cloto-primary.dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.2rem rgba(66, 61, 44, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(66, 61, 44, 0.5);
 }
 
 .btn-cloto-primary:not(:disabled):not(.disabled):active,
 .btn-cloto-primary:not(:disabled):not(.disabled).active,
 .show > .btn-cloto-primary.dropdown-toggle {
-    background-color: rgb(246, 191, 0);
+  background-color: rgb(246, 191, 0);
 }
 
 //* 無効時 *//
@@ -29,42 +29,5 @@
 .btn-cloto-primary:disabled,
 .btn-cloto-primary:disabled.disabled:focus,
 .btn-cloto-primary:disabled.disabled:focus {
-    background-color: rgb(236, 172, 10);
-}
-
-
-//*** Submitボタン ***//
-//* 有効時 *//
-.btn-cloto-submit {
-    font-weight: bold;
-    background-color: $btn-submit-color;
-    color: white;
-    border: none;
-}
-
-.btn-cloto-submit:hover {
-    background-color: rgb(20, 63, 255);
-    color: white;
-}
-
-.btn-cloto-submit:focus,
-.btn-cloto-submit.focus,
-.btn-cloto-submit:not(:disabled):not(.disabled):active:focus,
-.btn-cloto-submit:not(:disabled):not(.disabled).active:focus,
-.show > .btn-cloto-submit.dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.2rem rgba(0, 86, 246, 0.616);
-}
-
-.btn-cloto-submit:not(:disabled):not(.disabled):active,
-.btn-cloto-submit:not(:disabled):not(.disabled).active,
-.show > .btn-cloto-submit.dropdown-toggle {
-    background-color: rgb(20, 63, 255);
-}
-
-//* 無効時 *//
-.btn-cloto-submit.disabled,
-.btn-cloto-submit:disabled,
-.btn-cloto-submit:disabled.disabled:focus,
-.btn-cloto-submit:disabled.disabled:focus {
-    background-color: rgb(20, 63, 255);
+  background-color: rgb(236, 172, 10);
 }

@@ -27,7 +27,7 @@ class UserController extends Controller
         $this->user = $user;
     }
 
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -41,10 +41,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         //
     }

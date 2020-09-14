@@ -3,7 +3,12 @@ import Vuetify from 'vuetify';
 Vue.use(Vuetify);
 
 import 'vuetify/dist/vuetify.min.css';
+import '@mdi/font/css/materialdesignicons.css';
 
-const opts = {};
+const opts = {
+  icons: {
+    iconfont: 'mdi',
+  },
+};
 
 export default new Vuetify(opts);

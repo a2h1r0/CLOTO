@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'id';
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     /**

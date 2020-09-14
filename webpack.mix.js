@@ -13,10 +13,8 @@ require('laravel-mix-alias');
  */
 
 mix.alias({
-    '@': '/resources/js',
-    '~': '/resources/sass',
+  '@': '/resources/js',
+  '~': '/resources/sass',
 });
 
-mix.js('resources/js/app.js', 'public/js')
-    .scripts(['resources/js/tools/validate.js'], 'public/js/tools.js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.js('resources/js/app.js', 'public/js').sass('resources/sass/app.scss', 'public/css');
