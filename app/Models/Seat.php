@@ -17,6 +17,9 @@ class Seat extends Model
         'section_id', 'position', 'user_id', 'status'
     ];
 
+    public $timestamps = false;
+
+
     /**
      * Section モデルのリレーション
      *

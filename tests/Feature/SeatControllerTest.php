@@ -23,8 +23,9 @@ class SeatControllerTest extends TestCase
      */
     public function testSit()
     {
-        $response = $this->post(route('seatSit', ['id' => '1']), []);
+        $request = ['user_id' => '1'];
+        $response = $this->post(route('seatSit', ['seat' => '1']), $request);
 
-        $response->assertStatus(200);
+        $response->assertOk()->assertJsonFragment([true]);
     }
 }

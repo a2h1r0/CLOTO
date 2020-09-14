@@ -17,7 +17,9 @@ class SeatController extends Controller
      */
     public function sit(Request $request, Seat $seat)
     {
-        return response()->json($seat);
+        $result = $seat->update(['user_id' => $request['user_id'], 'status' => 'sitting']);
+
+        return response()->json($result);
     }
 
     /**
