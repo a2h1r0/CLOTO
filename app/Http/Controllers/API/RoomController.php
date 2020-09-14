@@ -8,20 +8,6 @@ use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
-    /** @var Room */
-    protected $room;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct(Room $room)
-    {
-        $this->room = $room;
-    }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -44,14 +30,19 @@ class RoomController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 部屋の区画と座席の一覧を取得
      *
-     * @param  \App\Room  $room
+     * @param  Int  $id 部屋ID
      * @return \Illuminate\Http\Response
      */
-    public function show(Room $room)
+    public function show(Int $id)
     {
-        return response()->json(['room' => $room]);
+        return response()->json(
+            Room::with('sections.seats')->find($id),
+            200,
+            [],
+            JSON_UNESCAPED_UNICODE
+        );
     }
 
     /**
