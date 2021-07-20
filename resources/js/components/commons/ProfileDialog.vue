@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" @click:outside="close()" width="600">
+  <v-dialog v-model="dialog" @click:outside="close()" width="1400">
     <v-card :color="color" dark v-if="user">
       <v-container>
         <v-row justify="end">
@@ -8,96 +8,111 @@
           </v-btn>
         </v-row>
 
-        <v-row class="text-center" justify="center">
-          <v-col class="pr-0" align-self="center">
-            <v-avatar size="100"><img :src="$storage('icon') + user.icon" /></v-avatar>
-            <v-row class="text-h5 mt-2" justify="center">{{ user.handlename }}</v-row>
-            <v-row class="text-body-2" justify="center">{{ '@' + user.username }}</v-row>
-            <v-row class="mt-2 text-body-2" justify="center">
-              登録日：{{ $moment(user.created_at).format('YYYY年MM月DD日') }}
-            </v-row>
-            <v-row class="mt-2 text-body-2" justify="center">
-              累計着席時間：{{ Math.floor(user.sitting_time / 60) }}時間
-            </v-row>
+        <v-container class="d-flex">
+          <v-row class="text-center" justify="center">
+            <v-col class="pr-0" align-self="center">
+              <v-avatar size="100"><img :src="$storage('icon') + user.icon" /></v-avatar>
+              <v-row class="text-h5 mt-2" justify="center">{{ user.handlename }}</v-row>
+              <v-row class="text-body-2" justify="center">{{ '@' + user.username }}</v-row>
+              <v-row class="mt-2 text-body-2" justify="center">
+                登録日：{{ $moment(user.created_at).format('YYYY年MM月DD日') }}
+              </v-row>
+              <v-row class="mt-2 text-body-2" justify="center">
+                累計着席時間：{{ Math.floor(user.sitting_time / 60) }}時間
+              </v-row>
 
-            <v-row class="mt-3" justify="center" v-if="user.sns || user.web">
-              <v-btn
-                icon
-                color="#00acee"
-                :href="'https://twitter.com/' + user.sns.twitter"
-                target="_blank"
-                v-if="user.sns.twitter"
+              <v-row class="mt-3" justify="center" v-if="user.sns || user.web">
+                <v-btn
+                  icon
+                  color="#00acee"
+                  :href="'https://twitter.com/' + user.sns.twitter"
+                  target="_blank"
+                  v-if="user.sns.twitter"
+                >
+                  <v-icon>mdi-twitter</v-icon>
+                </v-btn>
+
+                <v-btn
+                  icon
+                  color="#000000"
+                  :href="'https://github.com/' + user.sns.github"
+                  target="_blank"
+                  v-if="user.sns.github"
+                >
+                  <v-icon>mdi-github</v-icon>
+                </v-btn>
+
+                <v-btn
+                  icon
+                  :href="'https://qiita.com/' + user.sns.qiita"
+                  target="_blank"
+                  v-if="user.sns.qiita"
+                >
+                  <v-avatar size="20" color="white">
+                    <v-img :src="$storage('system') + 'qiita.png'"></v-img>
+                  </v-avatar>
+                </v-btn>
+
+                <v-btn icon color="#ffffff" :href="user.web" target="_blank" v-if="user.web">
+                  <v-icon>mdi-home</v-icon>
+                </v-btn>
+              </v-row>
+
+              <v-row class="mt-3" justify="center" v-if="user.id !== authUser.id">
+                <v-btn
+                  :color="!user.following ? 'primary' : 'error'"
+                  :loading="loading"
+                  @click="follow()"
+                >
+                  {{ !user.following ? 'フォロー' : 'フォロー解除' }}
+                </v-btn>
+              </v-row>
+
+              <p class="mt-3 mb-0" v-if="user.followed">フォローされています</p>
+              <v-card
+                light
+                flat
+                class="mt-3 mr-2 overflow-y-auto"
+                width="240"
+                min-height="240"
+                max-height="400"
               >
-                <v-icon>mdi-twitter</v-icon>
-              </v-btn>
+                <pre class="ma-3 text-body-1 text-left"
+                  >{{ user.introduction ? user.introduction : '自己紹介が未記入です' }}
+              </pre
+                >
+              </v-card>
+            </v-col>
+          </v-row>
 
-              <v-btn
-                icon
-                color="#000000"
-                :href="'https://github.com/' + user.sns.github"
-                target="_blank"
-                v-if="user.sns.github"
-              >
-                <v-icon>mdi-github</v-icon>
-              </v-btn>
+          <v-row justify="center">
+            <v-card light flat width="80%" class="mx-6 mt-2 text-center">
+              <v-card-text class="pt-3 pl-3 pb-0 black--text">目標</v-card-text>
 
-              <v-btn
-                icon
-                :href="'https://qiita.com/' + user.sns.qiita"
-                target="_blank"
-                v-if="user.sns.qiita"
-              >
-                <v-avatar size="20" color="white">
-                  <v-img :src="$storage('system') + 'qiita.png'"></v-img>
-                </v-avatar>
-              </v-btn>
-
-              <v-btn icon color="#ffffff" :href="user.web" target="_blank" v-if="user.web">
-                <v-icon>mdi-home</v-icon>
-              </v-btn>
-            </v-row>
-
-            <v-row class="mt-3" justify="center" v-if="user.id !== authUser.id">
-              <v-btn
-                :color="!user.following ? 'primary' : 'error'"
-                :loading="loading"
-                @click="follow()"
-              >
-                {{ !user.following ? 'フォロー' : 'フォロー解除' }}
-              </v-btn>
-            </v-row>
-
-            <p class="mt-3 mb-0" v-if="user.followed">フォローされています</p>
-          </v-col>
-
-          <v-col class="pl-0">
-            <v-card light flat class="mr-2 overflow-y-auto" min-height="240" max-height="400">
-              <pre class="ma-3 text-body-1"
-                >{{ user.introduction ? user.introduction : '自己紹介が未記入です' }}
-              </pre>
+              <pre class="ma-3 text-body-1">{{ user.vision || 'がんばる' }}</pre>
             </v-card>
-          </v-col>
-        </v-row>
+            <v-card light flat width="80%" class="mx-6 mt-2 text-center">
+              <v-card-text class="pt-3 pl-3 pb-0 black--text"
+                >いまやっていること
+                <small v-if="user.seat">in {{ user.room.name }}</small>
+                <small v-else>未着席</small>
+              </v-card-text>
 
-        <v-row justify="center">
-          <v-card light flat width="80%" class="mx-6 text-center">
-            <v-card-text class="pt-3 pl-3 pb-0 black--text"
-              >いまやっていること
-              <small v-if="user.seat">in {{ user.room.name }}</small>
-              <small v-else>未着席</small>
-            </v-card-text>
+              <pre class="ma-3 text-body-1">{{ user.in_progress || '集中しています！' }}</pre>
+            </v-card>
 
-            <pre class="ma-3 text-body-1">{{ user.in_progress || '集中しています！' }}</pre>
-          </v-card>
-        </v-row>
+	    <!-- タグ別のカルテ数の表示を行うグラフ -->
+            <v-card light flat width="80%" class="mx-6 mt-2">
+              <bar-chart :height="90" :graph-data="allKartes" v-if="graphShow"></bar-chart>
+            </v-card>
 
-        <v-row justify="center">
-          <v-card light flat width="80%" class="mx-6 mt-2 text-center">
-            <v-card-text class="pt-3 pl-3 pb-0 black--text">目標</v-card-text>
+	    <!-- 日別のカルテ数の表示を行うグラフ -->
+            <v-card light flat width="80%" class="mx-6 mt-2 p-2">
+              <heatmap :map-data="allKartes" v-if="graphShow"></heatmap>
+            </v-card>
 
-            <pre class="ma-3 text-body-1">{{ user.vision || 'がんばる' }}</pre>
-          </v-card>
-        </v-row>
+          </v-row>
+        </v-container>
 
         <v-row class="my-6" justify="center">
           <v-spacer></v-spacer>
@@ -205,7 +220,14 @@
 </template>
 
 <script>
+import BarChart from './ProfileDialog/BarChart.vue';
+import Heatmap from './ProfileDialog/Heatmap.vue';
+
 export default {
+  components: {
+    BarChart,
+    Heatmap,
+  },
   data() {
     return {
       dialog: false,
@@ -214,6 +236,7 @@ export default {
       show: null, // フォロー/フォロワーどちらを表示するか
       followers: [], // フォロー/フォロワー一覧
       kartes: [], // カルテ一覧
+      graphShow: true, //カルテ別の割合、日別のカルテ数を表すグラフの表示の有無
     };
   },
 
@@ -230,8 +253,17 @@ export default {
       return '#9e9e9e';
       // return this.$classColor(this.user.roadmaps.length ? this.user.roadmaps[0].in_progress : '');
     },
-  },
 
+    /**
+     * ユーザーのカルテのデータを子コンポーネントへ渡す
+     */
+    allKartes: async function () {
+      // ユーザーのカルテの取得。ここで呼び出さないとthis.kartesの値が取得できないのでここで実行した
+      await this.getKartes();
+
+      return this.kartes;
+    },
+  },
   watch: {
     username: function (username) {
       // 値がセットされたらオープン
@@ -248,12 +280,16 @@ export default {
     open: async function () {
       await this.getUser();
       this.dialog = true;
+      // タグ別のカルテの割合、日別のカルテ数のグラフの生成
+      this.graphShow = true;
     },
 
     /**
      * ダイアログのクローズ
      */
     close: function () {
+      // タグ別のカルテの割合、日別のカルテ数のグラフの削除。これをしないと、他のユーザーのプロフィールを開いたときに、前のユーザーのデータがグラフに残るため
+      this.graphShow = false;
       this.dialog = false;
       this.show = null;
       this.$store.dispatch('dialog/close', 'user');
@@ -298,11 +334,17 @@ export default {
     },
 
     /**
-     * カルテ一覧の表示
+     * カルテの取得
      */
-    showKartes: async function () {
+    getKartes: async function () {
       let response = await axios.get('/api/kartes/user/' + this.user.id);
       this.kartes = response.data;
+    },
+
+    /**
+     * カルテ一覧の表示
+     */
+    showKartes: function () {
       this.show = 'karte';
     },
   },

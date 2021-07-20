@@ -42,6 +42,7 @@ import VueDragscroll from 'vue-dragscroll';
 import VueScrollTo from 'vue-scrollto';
 import Chat from 'vue-beautiful-chat';
 import VueMasonryWall from 'vue-masonry-wall';
+import VueCalendarHeatmap from 'vue-calendar-heatmap';
 
 Vue.use(VueWindowSizePlugin)
   .use(VueHead, {
@@ -51,7 +52,8 @@ Vue.use(VueWindowSizePlugin)
   .use(VueDragscroll)
   .use(VueScrollTo)
   .use(Chat)
-  .use(VueMasonryWall);
+  .use(VueMasonryWall)
+  .use(VueCalendarHeatmap);
 
 new Vue({
   router,
